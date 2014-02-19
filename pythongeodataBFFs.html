@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <style type='text/css'>
+      body {
+        font-family: 'Tahoma';
+        letter-spacing:-5px;
+        background:#fff;
+        background-size:100%;
+        color:#000;
+        margin:0;
+        padding:0;
+        font-weight:bold;
+      }
+
+      h1, h2, h3, p {
+        margin:0;
+      }
+
+      em, a {
+        font-style:normal;
+        color:#185;
+      }
+
+      strong {
+        font-style:normal;
+        color:#fff;
+      }
+
+      code {
+        font-style:normal;
+        font-family: 'Tahoma';
+        color:#d34;
+      }
+
+      a {
+        background: #34d0e7;
+        color:#fff;
+        text-decoration:none;
+      }
+
+      img {
+        width:100%;
+      }
+
+      div {
+        cursor:pointer;
+        cursor:hand;
+        position:absolute;
+        top:0;
+        left:0;
+      }
+    </style>
+    <script type='text/javascript'>
+      window.onload = function() {
+          var s = document.getElementsByTagName('div'), cur = 0;
+          if (!s) return;
+          function go(n) {
+              cur = n;
+              var i = 1e3, e = s[n];
+              for (var k = 0; k < s.length; k++) s[k].style.display = 'none';
+              e.style.display = 'inline';
+              e.style.fontSize = i + 'px';
+              if (e.firstChild.nodeName === 'IMG') {
+                  document.body.style.backgroundImage = 'url(' + e.firstChild.src + ')';
+                  e.firstChild.style.display = 'none';
+              } else {
+                  document.body.style.backgroundImage = '';
+                  document.body.style.backgroundColor = e.style.backgroundColor;
+              }
+              while (
+                  e.offsetWidth > window.innerWidth ||
+                  e.offsetHeight > window.innerHeight) {
+                  e.style.fontSize = (i -= 10) + 'px';
+                  if (i < 0) break;
+              }
+              e.style.marginTop = ((window.innerHeight - e.offsetHeight) / 2) + 'px';
+              if (window.location.hash !== n) window.location.hash = n;
+              document.title = e.textContent || e.innerText;
+          }
+          document.onclick = function() {
+              go(++cur % (s.length));
+          };
+          document.onkeydown = function(e) {
+              (e.which === 39) && go(Math.min(s.length - 1, ++cur));
+              (e.which === 37) && go(Math.max(0, --cur));
+          };
+          function parse_hash() {
+              return Math.max(Math.min(
+                  s.length - 1,
+                  parseInt(window.location.hash.substring(1), 10)), 0);
+          }
+          if (window.location.hash) cur = parse_hash() || cur;
+          window.onhashchange = function() {
+              var c = parse_hash();
+              if (c !== cur) go(c);
+          };
+
+          go(cur);
+      };
+    </script>
+  </head>
+  <body>
+    <!-- intro -->
+    <div><em>python</em> + geographic data = <em>BFFs</em></div>
+    <div><img src="http://www.fantom-xp.com/wallpapers/15/Cat_and_dog_friends.jpg"><code>why?</code></div>
+    <div><img src="map1.png">I <code>&lt;3</code> maps, but making them can be a pain</div>
+    <div>the <em>worst</em> part is</div>
+    <div><img src="http://abortionsforall.files.wordpress.com/2011/07/data-cat.gif"><strong>getting data to cooperate</strong></div>
+    <div>it is usually <em>not</em> in the format you need</div>
+    <div><img src="https://pbs.twimg.com/profile_images/1340224844/Picture_11.png">has several obvious <code>errors</code></div>
+    <div>is split up into <em>50 different files</em></div>
+    <div><img src="http://www.cartogrammar.com/images/azimuthal.jpg">is in a <em>completely different projection</em> than what you need</div>
+    <div><em>AND</em> has no metadata, so you have <code>no idea</code> what you're even looking at</div>
+    <div>you could point and click all day in a desktop GIS, or <em>you could use python</em></div>
+    <!-- section 1: libraries -->
+    <div><em>python libraries</em><br/>
+      <a href="https://pypi.python.org/pypi/Fiona">Fiona</a>: convert and filter your data
+    </div>
+    <div>example: converting shapefile data from <a href="http://www.naturalearthdata.com/">Natural Earth</a> to GeoJSON</div>
+    <div><img src="fiona1.png">
+      1. download <a href="http://www.naturalearthdata.com/downloads/110m-cultural-vectors/">some data</a><br/>
+      2. <img src="fionacode1.png">
+      3. enjoy!
+  </body>
+</html>
