@@ -17,7 +17,8 @@ for feature in data["features"]:
 
     if ("building" in tags and "name" in tags):
         osm_id = str(feature["id"])
-        name = feature["properties"]["tags"]["name"]
+        name = tags["name"]
+        tags.pop("name")
         geom_type = feature["geometry"]["type"]
         coordinates = feature["geometry"]["coordinates"]
 

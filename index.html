@@ -103,7 +103,7 @@
   </head>
   <body>
     <!-- intro -->
-    <div><em>python</em> + geographic data = <em>BFFs</em></div>
+    <div><a href="http://pdxmele.com/python-geodata-bffs">python + geographic data = BFFs</a><br/>Mele Sax-Barnett</div>
     <div><img src="http://www.fantom-xp.com/wallpapers/15/Cat_and_dog_friends.jpg"><em>why?</em><br/><br/></div>
     <div><img src="img/map1.png">I <code>&lt;3</code> maps, but making them can be a pain</div>
     <div>the <em>worst</em> part is</div>
@@ -136,8 +136,22 @@
     </div>
     
     <!-- GeoJSON and Python dictionaries -->
-    <div>about <a href="http://geojson.org/">GeoJSON</a>:</br></br>* like JSON, but with geo</br>* easy to use for web mapping</br>* easy to parse with Python</div>
-    <div>all you need to do is <em>get it into a dictionary</em></div>
+    <div>about <a href="http://geojson.org/">GeoJSON</a>:</br></br>* JSON for geodata</br>* easy to use for web mapping</br>* easy to parse with Python</div>
+    <div>all you need to do is <code>treat it like a dictionary</code></div>
+    <div><em>example:</em><br/><a href="http://osm.org">OpenStreetMap</a> data to map-ready GeoJSON</div>
+    <div>1. download some data</br><img src="img/osm_start.png"></div>
+    <div>2. convert to <em>GeoJSON</em> with <a href="https://github.com/pdxmele/gwyw-osm/blob/master/converters.md">your tool of choice</a>, or you can parse the xml directly</div>
+    <div>3. process</br><img src="img/geojsoncode1.png"><br/></div>
+    <div>...<img src="img/geojsoncode2.png"></div>
+    <div><img src="img/osm_done.png">4. <code>enjoy!</code></div>
+    <div>because it's just a dictionary, you can also <code>create tests</code> for the data:<br/>* check for <em>required keys</em><br/>* check <em>the type</em> of each key's value<br/>* check <em>the structure</em><br/>* check for <em>valid geometry</em></div>
+    <div>this is important if your system expects <br/>a very particular format, while your data comes from <code>a variety of sources</code><br/><img src="img/ua_ss.png"></div>
 
+    <!-- Wrap it up -->
+    <div>finally, GIS software <code>&lt;3</code>s python</div>
+    <div>use it to script within the app, or to build custom tools and plugins</div>
+    <div><a href="http://resources.arcgis.com/en/communities/python/">ArcGIS</a><br/><img src="img/arcgis.png"></div>
+    <div><a href="http://www.qgis.org/en/docs/pyqgis_developer_cookbook/intro.html">QGIS</a><br/><img src="img/qgis.png"></div>
+    <div><code>thank you!</code><br/><br/>questions? <a href="https://twitter.com/pdxmele">@pdxmele</a> or file a ticket <a href="https://github.com/pdxmele/python-geodata-bffs">here</a></br>more resources here</a><br/>
   </body>
 </html>
