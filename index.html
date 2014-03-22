@@ -102,7 +102,7 @@
     </script>
   </head>
   <body>
-    <!-- intro -->
+    <!-- Intro -->
     <div><a href="http://pdxmele.com/python-geodata-bffs">python + geographic data = BFFs</a><br/>Mele Sax-Barnett</div>
     <div><img src="http://www.fantom-xp.com/wallpapers/15/Cat_and_dog_friends.jpg"><em>why?</em><br/><br/></div>
     <div><img src="img/map1.png">I <code>&lt;3</code> maps, but making them can be a pain</div>
@@ -113,15 +113,15 @@
     <div>is split up into <em>50 different files</em></div>
     <div><img src="http://www.cartogrammar.com/images/azimuthal.jpg">is in a <code>completely different projection</code> than what you need</div>
     <div><em>AND</em> has no metadata, so you have <code>no idea</code> what you're even looking at</div>
-    <div>you could point and click all day in a desktop GIS, <em>or you could use</em> <code>python</code></div>
+    <div>you could point and click all day in GIS software, <em>or you could use python</em></div>
 
-    <!-- section 1: libraries -->
-    <!-- fiona -->
-    <div><em>library 1:</em><br/><a href="https://pypi.python.org/pypi/Fiona">Fiona</a><br/>convert and filter your data</div>
+    <!-- Section 1: python modules -->
+    <!-- Fiona -->
+    <div><a href="https://pypi.python.org/pypi/Fiona">fiona</a><br/>convert and filter your data</div>
     <div><em>example:</em><br/> converting <a href="http://www.naturalearthdata.com/">Natural Earth</a> shapefile data to GeoJSON</div>
     <div><img src="img/fiona1.png">1. download <a href="http://www.naturalearthdata.com/downloads/110m-cultural-vectors/">some data</a><br/>2. <img src="img/fionacode1.png"></div>
     <div><img src="img/fiona1.png">3. enjoy!<br/><br/><br/></div>
-    <div>combine with <a href="https://pypi.python.org/pypi/pyproj">pyproj</a> to change the projection</div>
+    <div>combine fiona with <a href="https://pypi.python.org/pypi/pyproj">pyproj</a> to change the projection</div>
     <div><img src="img/proj.png">1. <img src="img/proj1code.png"></div>
     <div><img src="img/proj.png">2. <img src="img/proj2code.png"></div>
     <div><img src="img/proj.png">3. enjoy!<br/><br/></div>
@@ -129,13 +129,13 @@
     <div><img src="img/fiona2.png">1. export all the GPX data from your favorite tracker<br/>2. <img src="img/fionacode2-3.png"></div>
     <div><img src="img/fiona2.png">3. enjoy!<br/><br/><br/><br/></div>
 
-    <!-- shapely -->
-    <div><em>library 3:</em><br/><a href="https://pypi.python.org/pypi/Shapely">Shapely</a><br/>geoprocessing tools</div>
+    <!-- Shapely -->
+    <div><a href="https://pypi.python.org/pypi/Shapely">shapely</a><br/>geoprocessing tools</div>
     <div>
       <em>examples:</em>
     </div>
     
-    <!-- GeoJSON and Python dictionaries -->
+    <!-- Section 2: GeoJSON and Python dictionaries -->
     <div>about <a href="http://geojson.org/">GeoJSON</a>:</br></br>* JSON for geodata</br>* easy to use for web mapping</br>* easy to parse with Python</div>
     <div>all you need to do is <code>treat it like a dictionary</code></div>
     <div><em>example:</em><br/><a href="http://osm.org">OpenStreetMap</a> data to map-ready GeoJSON</div>
@@ -147,11 +147,12 @@
     <div>because it's just a dictionary, you can also <code>create tests</code> for the data:<br/>* check for <em>required keys</em><br/>* check <em>the type</em> of each key's value<br/>* check <em>the structure</em><br/>* check for <em>valid geometry</em></div>
     <div>this is important if your system expects <br/>a very particular format, while your data comes from <code>a variety of sources</code><br/><img src="img/ua_ss.png"></div>
 
-    <!-- Wrap it up -->
+    <!-- Section 3: Wrap it up -->
     <div>finally, GIS software <code>&lt;3</code>s python</div>
-    <div>use it to script within the app, or to build custom tools and plugins</div>
-    <div><a href="http://resources.arcgis.com/en/communities/python/">ArcGIS</a><br/><img src="img/arcgis.png"></div>
-    <div><a href="http://www.qgis.org/en/docs/pyqgis_developer_cookbook/intro.html">QGIS</a><br/><img src="img/qgis.png"></div>
+    <div><a href="http://resources.arcgis.com/en/communities/python/">ArcGIS</a><br/><img src="img/arcgis.png"><br/><a href="http://arcpy.wordpress.com/">arcpy</a> scripting and <a href="http://resources.arcgis.com/en/help/main/10.1/index.html#//014p00000025000000">add-ins</a></div>
+    <div><a href="http://www.qgis.org/en/docs/pyqgis_developer_cookbook/intro.html">QGIS</a><br/><img src="img/qgis.png"><br/>python console, module, and <a href="https://plugins.qgis.org/">plugins</div>
+    <div><img src="img/qgisplugins1.png"></div>
+    <div><img src="img/qgisplugins2.png"></div>
     <div><code>thank you!</code><br/><br/>questions? <a href="https://twitter.com/pdxmele">@pdxmele</a> or file a ticket <a href="https://github.com/pdxmele/python-geodata-bffs">here</a></br>more resources here</a><br/>
   </body>
 </html>
