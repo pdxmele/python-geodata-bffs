@@ -1,5 +1,6 @@
 import os, fiona
 
+
 rootdir = 'moves_export'
 examplefile = 'moves_export/storylines_20131201_to_20131207.gpx'
 in_crs = ''
