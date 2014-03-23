@@ -19,7 +19,6 @@ with fiona.open('ne_110m_admin_0_countries.shp', 'r') as inp:
         
         for f in inp:
             if f["properties"]["sovereignt"] != "Antarctica":
-            #if f["properties"]["sovereignt"] == "United States of America":
                 try:
                     if f['geometry']['type'] == "Polygon":
                         new_coords = []
@@ -31,12 +30,12 @@ with fiona.open('ne_110m_admin_0_countries.shp', 'r') as inp:
                         new_coords = []
                         inner_coords = []
                         for polygon in f['geometry']['coordinates']:
-                            count = 0
                             for ring in polygon:
                                 x2, y2 = transform(p_in, p_out, *zip(*ring))
                                 inner_coords.append(zip(x2, y2))
                         new_coords.append(inner_coords)
                         f['geometry']['coordinates'] = new_coords
                     out.write(f)
+                
                 except Exception, e:
                     print "Error transforming feature " + f['id']
