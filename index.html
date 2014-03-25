@@ -113,10 +113,10 @@
     <div><img src="http://theplayunderground.com/images/Folder%20Stack.jpg">is split up into <code>50</code> different files</div>
     <div><img src="http://www.cartogrammar.com/images/azimuthal.jpg">is in a <code>completely different projection</code> than what you need</div>
     <div><img src="img/noideadog.jpg"><strong>AND</strong> has no <a href="https://www.fgdc.gov/metadata">metadata</a>, so you have <code>no idea</code> what you're even looking at</div>
-    <div>you could point and click all day in GIS software, <em>or you could use python</em></div>
+    <div>you could point and click all day in out-of-the-box GIS software, <em>or you could use python</em></div>
 
     <!-- conversion / fiona -->
-    <div>convert and filter your data with <a href="https://pypi.python.org/pypi/Fiona">fiona</a></div>
+    <div><strong>libraries:</strong><br/>convert and filter your data with <a href="https://pypi.python.org/pypi/Fiona">fiona</a></div>
     <div><strong>example:</strong><br/> converting <a href="http://www.naturalearthdata.com/">Natural Earth</a> shapefile data to GeoJSON</div>
     <div>1. download <a href="http://www.naturalearthdata.com/downloads/110m-cultural-vectors/">some data</a><br/>2. <img src="img/fionacode1.png"><br/>you can also <a href="http://toblerity.org/fiona/manual.html#filtering">filter by bounding box</a></div>
     <div><img src="img/fiona1.png">3. enjoy!<br/><br/><br/></div>
@@ -137,7 +137,7 @@
     <div>3. process</br><img src="img/geojsoncode1.png"><br/></div>
     <div>...<img src="img/geojsoncode2.png"></div>
     <div><img src="img/osm_done.png">4. <code>enjoy!</code></div>
-    <div>repeat with csv/xml data too:<br/>just put it in a dictionary and  assemble valid GeoJSON with <em>only the features and attributes that you want</em>.<br/>if you have a lot of data, switch to reading and writing line-by-line.</div>
+    <div><strong>repeat with csv/xml data too:</strong><br/>just put it in a dictionary and  assemble valid GeoJSON with <em>only the features and attributes that you want</em>.<br/>if you have a lot of data, switch to reading and writing line-by-line.</div>
     <div>because it's just a dictionary, you can also <code>create tests</code> for the data:<br/>* check for <strong>required keys</strong><br/>* check <em>the type</em> of each key's value<br/>* check against <strong>known values</strong><br/>* check <em>the structure</em><br/>* check for <strong>valid geometry</strong></div>
     <div>this is important if your system expects <br/>a very particular format, while your data comes from <code>a variety of sources</code><br/><img src="img/ua_ss.png"></div>
 
