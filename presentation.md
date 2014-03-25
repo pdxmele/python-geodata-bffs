@@ -2,7 +2,6 @@ Mele Sax-Barnett
 
 #[Python + Geodata = BFFs](http://pdxmele.com/python-geodata-bffs/index.html) 
 
--------------------
 
 ##Introduction
 
