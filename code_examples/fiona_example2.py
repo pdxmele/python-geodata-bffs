@@ -1,5 +1,5 @@
-import os
 import fiona
+import os
 
 
 ROOT_DIR = 'moves_export'
