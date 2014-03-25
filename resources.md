@@ -40,7 +40,7 @@ ArcGIS Python resources:
 QGIS Python resources: 
 
 * [PyQGIS Developer Cookbook](http://www.qgis.org/en/docs/pyqgis_developer_cookbook/intro.html)
-* Python tutorials (from [the QGIS Workshop](http://www.qgisworkshop.org/html/workshop/index.html):
+* Python tutorials (from [the QGIS Workshop](http://www.qgisworkshop.org/html/workshop/index.html)):
 	* [Exploring the QGIS Python Console](http://www.qgisworkshop.org/html/workshop/python_in_qgis_tutorial2.html)
 	* [Building A Simple Plugin](http://www.qgisworkshop.org/html/workshop/plugins_tutorial.html)
 
@@ -53,4 +53,4 @@ Other useful stuff:
 * A [list of OpenStreetMap conversion tools](https://github.com/pdxmele/gwyw-osm/blob/master/converters.md) from my ["Getting what you want out of OpenStreetMap"](https://github.com/pdxmele/gwyw-osm/) presentation
 * [PPyGIS](https://pypi.python.org/pypi/PPyGIS), a [PostGIS](http://postgis.refractions.net/) adapter for [Psycopg](https://pypi.python.org/pypi/psycopg2)
 
-More suggestions welcome!
+Suggestions welcome!
