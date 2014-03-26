@@ -1,7 +1,6 @@
-Mele Sax-Barnett
-
 #[Python + Geodata = BFFs](http://pdxmele.com/python-geodata-bffs/index.html) 
 
+by Mele Sax-Barnett
 
 ##Introduction
 
@@ -9,26 +8,26 @@ Why do I think Python and geographic data will be best friends forever?
 
 I &lt;3 maps, but making them can be a pain. The worst part is getting the data to cooperate.
 
-It is usually:
+It usually:
 
-* not in the format you need, 
-* has several obvious errors, 
-* is split up into 50 different files, 
-* is in a completely different projection than what you need, and 
-* has no metadata, so you have no idea what you're even looking at.
+* Is not in the [format](http://www.gdal.org/ogr/ogr_formats.html) [you need](http://en.wikipedia.org/wiki/GIS_file_formats)
+* Has several [obvious errors](http://en.wikipedia.org/wiki/Null_Island)
+* Is split up into 50 different files 
+* Is in a completely different [projection](http://en.wikipedia.org/wiki/Map_projection)/coordinate system than what you need
+* And has no [metadata](https://www.fgdc.gov/metadata), so you have no idea what you're even looking at
 
-You could point and click all day in GIS software to get it ready, or you could use Python.
+You could point and click all day in out-of-the-box GIS software to get it ready to use, or you could add Python to the mix.
 
 ## Conversion tools
 
 ###Convert and filter your data with [Fiona](https://pypi.python.org/pypi/Fiona).
 
-Example: Converting [Natural Earth](http://www.naturalearthdata.com/) Shapefile data to GeoJSON
+Example: Converting [Natural Earth](http://www.naturalearthdata.com/) shapefile data to GeoJSON
 
-1. Download [some data](http://www.naturalearthdata.com/downloads/110m-cultural-vectors/)
-2. [Script](https://github.com/pdxmele/python-geodata-bffs/blob/master/code_examples/fiona_example1.py):
+1. Download some [free, awesome data](http://www.naturalearthdata.com/downloads/110m-cultural-vectors/)
+2. [Put together a script like this](https://github.com/pdxmele/python-geodata-bffs/blob/master/code_examples/fiona_example1.py):
 
-	Note: all of the scripts included below were based off of examples in the documentation for these libraries (where applicable).
+	*Note: all of the scripts included below were based off of examples in the documentation for these libraries (where applicable).*
 	
 
 		import fiona
@@ -46,7 +45,7 @@ Example: Converting [Natural Earth](http://www.naturalearthdata.com/) Shapefile 
 		            if f["properties"]["sovereignt"] != "Antarctica":
 		                out.write(f)
                 
-	This script takes a Natural Earth countries shapefile, copies the schema and coordinate system, and then moves all the data over to a new GeoJSON file (unless the name of the country is Antarctica). In this way, you can filter by any property that you like at the same time as you do your data conversion.
+	This script takes a Natural Earth countries shapefile, copies the schema and coordinate system, and then moves all the data over to a new GeoJSON file--unless the name of the country is Antarctica. In this way, you can filter by any property at the same time as you do your data conversion.
 	
 	You can also [filter by bounding box](http://toblerity.org/fiona/manual.html#filtering).
 
@@ -56,9 +55,9 @@ Example: Converting [Natural Earth](http://www.naturalearthdata.com/) Shapefile 
 
 ###Combine Fiona with [Pyproj](https://pypi.python.org/pypi/pyproj) to change the projection
 
-It can be a good idea to change the projection/coordinate system to one that suits your needs. For example, if you're mapping the poles, you don't want to use Mercator. Similarly, if you're measuring large distances or plotting great circle routes, your accuracy depends on using the correct projection. Remember, the world is not the shape of your screen!
+It can be a good idea to change the projection/coordinate system to one that suits your needs. For example, if you're mapping the poles, you don't want to use Mercator (in the image above). Similarly, if you're measuring large distances or plotting great circle routes, your accuracy depends on using the correct projection. Remember, the world is not the shape of your screen!
 
-1. [Script](https://github.com/pdxmele/python-geodata-bffs/blob/master/code_examples/fiona_proj.py):
+1. [Try a script like this](https://github.com/pdxmele/python-geodata-bffs/blob/master/code_examples/fiona_proj.py):
 		
 		import fiona
 		from fiona.crs import from_epsg
@@ -102,17 +101,17 @@ It can be a good idea to change the projection/coordinate system to one that sui
 		                except Exception, e:
 		                    print "Error transforming feature " + f['id']
 
-	This script uses PyProj to transform each of the coordinates to the new coordinate system that is given via [EPSG SRID code](http://en.wikipedia.org/wiki/SRID). I had to separate Polygons and MultiPolgyons because of their data structure differences -- MultiPolygon coordinates live one level deeper.
+	This script uses PyProj to transform each of the coordinates to the new coordinate system that is given with from_epsg via its [EPSG](http://epsg.io/) [SRID code](http://en.wikipedia.org/wiki/SRID). This dataset includes both Polygons and MultiPolygons, and I had to handle them differently because of their data structure differences (MultiPolygon coordinates live one level deeper so they can hold a number of Polygons). [Learn more about geometry types in Fiona here](http://toblerity.org/fiona/manual.html#record-geometry).
 
-2. Enjoy!
+2. Enjoy your new coordinate system!
 
 <img src="img/proj.png" height=300px>
 
 
 ###Another Fiona example: Assembling a bunch of GPX tracks into a single GeoJSON file
 
-1. Export all the GPX data from your favorite tracker
-2. [Script](https://github.com/pdxmele/python-geodata-bffs/blob/master/code_examples/fiona_example2.py):
+1. Export all the GPX data from your favorite tracker into one folder
+2. Identify an example file, and [use a script like this](https://github.com/pdxmele/python-geodata-bffs/blob/master/code_examples/fiona_example2.py):
 
 		import fiona
 		import os
@@ -144,18 +143,15 @@ It can be a good idea to change the projection/coordinate system to one that sui
 		                        print(feature)
 		                        out.write(feature)
 	
-	With this script, I used an example of the kind of file I wanted to process to set up the schema and coordinate system, then it walks a directory for .gpx files to assemble. GPX files have several layers, and in this case I wanted tracks.
-	
-	*Note: the GPX driver is not actually supported by default in the current version of Fiona, but you can enable it manually and it should generally work  depending on your installation.*
-
+	In this case, I used one of the files I wanted to include as an example so I could set up the schema and coordinate system (this will only work if they all have the exact same structure). Next, it walks a directory looking for .gpx files to assemble. Since [GPX files](http://en.wikipedia.org/wiki/GPS_eXchange_Format) have several layers, I had to tell Fiona that I wanted the "tracks" layer.
 
 3. Now you can visualize everywhere that you've been:
 
 <img src="img/fiona2.png" height=300px>
 
-These are exports from [Moves App](http://www.moves-app.com/) via [Moves Export](http://http://www.moves-export.com/), visualized with [TileMill](https://www.mapbox.com/tilemill/) on MapBox OpenStreetMap tiles.
+I used exports from [Moves App](http://www.moves-app.com/) via [Moves Export](http://http://www.moves-export.com/), and visualized them with [TileMill](https://www.mapbox.com/tilemill/) on [MapBox](https://www.mapbox.com/) [OpenStreetMap](http://switch2osm.org) tiles.
 
-##GeoJSON diversion
+##A Diversion into GeoJSON
 
 Before we go any further, let's talk about [GeoJSON](http://geojson.org). Why am I so into GeoJSON?
 
@@ -165,15 +161,15 @@ Before we go any further, let's talk about [GeoJSON](http://geojson.org). Why am
 
 All you need to do is treat it like a dictionary.
 
-###Example: Turning [OpenStreetMap](http://osm.org) data into map-ready GeoJSON
+###Example: Turning OpenStreetMap data into map-ready GeoJSON
 
-1. Download some data
+1. Download some data from [OpenStreetMap](http://osm.org)
 
 	<img src="img/osm_start.png" height=300px>
 
-2. Convert to GeoJSON with [your tool of choice](https://github.com/pdxmele/gwyw-osm/blob/master/converters.md), or you can [parse the xml directly](http://wiki.openstreetmap.org/wiki/OSM_XML)
+2. Convert it to GeoJSON with [your tool of choice](https://github.com/pdxmele/gwyw-osm/blob/master/converters.md), or you can [parse the OSM XML directly](http://wiki.openstreetmap.org/wiki/OSM_XML)
 
-3. [Script](https://github.com/pdxmele/python-geodata-bffs/blob/master/code_examples/geojson_example.py):
+3. Clean it up with a [script like this](https://github.com/pdxmele/python-geodata-bffs/blob/master/code_examples/geojson_example.py):
 
 		import json
 		
@@ -218,15 +214,17 @@ All you need to do is treat it like a dictionary.
 		with open(OUTPUT_PATH, 'w') as output:
 		    output.write(json.dumps(feature_collection))
 
-	We start by loading all the input file data into a dictionary and setting up the feature_collection output dictionary. Then, we grab only the features that have the OpenStreetMap "building" and "name" tags, which means they will all be named buildings. After putting all of the attributes we want to keep into variables (and pulling the name out of the tags dictionary), we fill in the new file structure. Finally, the feature_collection dictionary (valid GeoJSON) is written out into a new file.
+	It starts by loading all the input file data into a dictionary and setting up the feature_collection output dictionary. Then, I grab only the features that have the OpenStreetMap "building" and "name" tags (only named buildings, nothing else). After putting all of the attributes I want to keep into variables and pulling the name out of the tags dictionary, it puts together the new feature structure. Finally, the feature_collection dictionary (valid GeoJSON) gets written out into a new file.
     
-4. Check out all these buildings in Shinjuku! I'm ready to plan my trip. Or maybe I should have gotten all of the Ramen shops in the city instead?
+4. Check out these buildings in Shinjuku! I'm ready to plan my trip to Japan. Or maybe I should have grabbed all of the ramen shops in Tokyo instead?
     
 <img src="img/osm_done.png" height=300px>
 
-You can follow a similar pattern with xml and csv data too--just put it in a dictionary and assemble GeoJSON with only the features and attributes that you want. If you have a lot of data, switch to reading and writing line-by-line.
+You can follow a similar approach when starting with XML and raw CSV data too--just parse, put it in a dictionary, and assemble GeoJSON with only the features and attributes that you want. You can also run mathematical or geographical operations on your features, creating polygons around points or modifying them in other ways. 
 
-Because it's just a dictionary, you can also create tests for the data:
+If you have a lot of data (like the whole OSM planet), add some newlines around pseudo-dictionary objects and switch to reading and writing line-by-line.
+
+And, because it's just a dictionary, it's easy to create tests for the data:
 
 * Check for required keys
 
@@ -247,14 +245,12 @@ Because it's just a dictionary, you can also create tests for the data:
 
 		if isinstance(data[key][k0][k1], dict):
 	
-* Check for valid geometry
+* Validate geometry
 
 		if ("type" not in data["geometry"] or not (data["geometry"]["type"] == "Polygon" or data["geometry"]["type"] == "MultiPolygon")):
 		
 
-This can be very important if your system expects a very particular format, while your data comes from a variety of sources. 
-
-At Urban Airship, we use data from OpenStreetMap, Natural Earth, TIGER, proprietary datasets like Nielsen and Maponics, and custom data from our customers. All of them need to be in just the right format to work with our user interface and backend systems.
+This can be very important if your system expects a very particular format while your data comes from a variety of sources. At Urban Airship, we use data from OpenStreetMap, Natural Earth, TIGER, proprietary datasets like Nielsen and Maponics, as well as custom lat/long data from our customers. All of them need to be in just the right format to work with our user interface and backend systems.
 
 <img src="img/ua_ss.png" height=300px>
 
@@ -273,13 +269,13 @@ You can find [tons of examples in the manual](http://toblerity.org/shapely/manua
 * Get centroid, bounding box, area, or length of a feature
 * Get the distance between two objects, check if they are equal or almost equal
 * Get the difference or symmetrical difference
-* See if one contains the other, if they intersect, and more
+* See if one contains the other, if they intersect, and more...
 
 
-###Example: Include only the GPX tracks from earlier that are in Portland
+###Example: Keep only the GPX tracks that are in Portland
 
-1. Get Portland as GeoJSON from your source of choice
-2. [Script](https://github.com/pdxmele/python-geodata-bffs/blob/master/code_examples/shapely_example.py):
+1. Get Portland/your city as GeoJSON from your source of choice
+2. Try [a script like this](https://github.com/pdxmele/python-geodata-bffs/blob/master/code_examples/shapely_example.py):
 
 		import json
 		import shapely
@@ -307,13 +303,13 @@ You can find [tons of examples in the manual](http://toblerity.org/shapely/manua
 		with open(OUTPUT_PATH, 'w') as output:
 		    output.write(json.dumps(feature_collection))
     
-	In this case, I did a convex hull around Portland before using ```within``` so that the tracks that intersected Maywood Park (the hole in the middle) would also be included. The ```convex_hull``` created the smallest polygon containing all of the points within Portland.
+	After some setup, we create a Shapely shape out of each feature's geometry. In this case, I did a convex hull around Portland before using [within](http://toblerity.org/shapely/manual.html#object.within) so that the tracks that intersected Maywood Park (the hole in the middle of Portland) would also be included. The [convex_hull](http://toblerity.org/shapely/manual.html#object.convex_hull) created the smallest polygon that contains all of the points within Portland.
 
-3. Enjoy! The pink tracks are those that remained after the code was run, which left out my trip to Disneyland.
+3. Enjoy! The pink tracks are those that remained after the code was run. As you see, it removed my flight to Disneyland and rovings around southern California.
 
 <img src="img/shapelyresult.png" height=300px>
  
-Another option for geoprocessing without GIS software is [PostGIS](http://postgis.net/). Python can talk to it with [Psycopg](https://pypi.python.org/pypi/psycopg2/) or your other Python PostgreSQL tool of choice.
+Another option for geoprocessing without GIS software is [PostGIS](http://postgis.net/). Python can talk to it with [Psycopg](https://pypi.python.org/pypi/psycopg2/) or your other Python PostgreSQL tool of choice. There are even more options in the [additional resources doc for this presentation](https://github.com/pdxmele/python-geodata-bffs/blob/master/resources.md).
 
 
 ##Finally, GIS software &lt;3s python</div>
@@ -338,6 +334,6 @@ Another option for geoprocessing without GIS software is [PostGIS](http://postgi
 
 ##Thank you!
 
-Questions? [@pdxmele](https://twitter.com/pdxmele) or [file an issue here](https://github.com/pdxmele/python-geodata-bffs).
+Questions? Tweet [@pdxmele](https://twitter.com/pdxmele) or [file an issue here](https://github.com/pdxmele/python-geodata-bffs).
 
 [Additional resources here](https://github.com/pdxmele/python-geodata-bffs/blob/master/resources.md)
