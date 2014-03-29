@@ -9,6 +9,7 @@ Python + Geo things I didn't have time to talk about:
 * [PySAL](http://pysal.readthedocs.org/en/latest/), a spatial analysis library that can handle a lot of complex functionality
 * [PyGeoIf](https://pypi.python.org/pypi/pygeoif)
 * [geopython](http://geopython.github.io/): modules to serve data and metadata 
+* [mapnik](https://github.com/mapnik/mapnik): "an open source toolkit for developing mapping applications"
 * Rtree and zope.index.rtree in the [Toblerity project](http://toblerity.org/), where Fiona and Shapely also live
 * [GRASS and Python](http://grasswiki.osgeo.org/wiki/GRASS_and_Python)
 * A ton of other things I forgot or haven't heard about yet
