@@ -104,6 +104,7 @@
   <body>
 
     <div>after this finishes loading, use the arrow keys to change slides or <strong>view this presentation as a markdown file with notes</strong> <a target="_blank" href="https://github.com/pdxmele/python-geodata-bffs/blob/master/presentation.md">here</a></div>
+    <div>http://bit.ly/python-geo-bffs</div>
 
     <!-- Introduction -->
     <div><a target="_blank" href="http://github.com/pdxmele/python-geodata-bffs/">Python + geographic data = BFFs</a><br/>Mele Sax-Barnett</div>
@@ -116,11 +117,14 @@
     <div><img src="img/FolderStack.jpg">is split up into <code>50</code> different files</div>
     <div><img src="img/azimuthal.jpg">is in a <code>completely different projection</code> than what you need</div>
     <div><img src="img/noideadog.jpg"><strong>AND</strong> has no <a target="_blank" href="https://www.fgdc.gov/metadata">metadata</a>, so you have <code>no idea</code> what you're even looking at</div>
-    <div>you could point and click all day in out-of-the-box GIS software, <em>or you could use Python</em></div>
+    <div>you could point and click all day in out-of-the-box <a target="_blank" href="http://en.wikipedia.org/wiki/Geographic_information_system">GIS</a> software, <em>or you could use Python</em></div>
+
+    <!-- About Geographic Data-->
+    <div><em>about geographic data:</em><br/><ul><li>one or several files</li><li>has a <strong>coordinate system</strong>/projection</li><li>made up of one or several "layers" of data</li><li>each of which includes a number of <strong>features</strong></li><li>each feature has <strong>geometry</strong>:</li><ul><li>type: point/line/polygon/etc.</li><li><strong>coordinates</strong></li></ul><li>each feature also has various other <strong>attributes</strong>/properties</li></ul></div>
 
     <!-- Conversion / Fiona -->
     <div><strong>libraries:</strong><br/>convert and filter your data with <a target="_blank" href="https://pypi.python.org/pypi/fiona">Fiona</a></div>
-    <div><strong>example:</strong><br/> converting <a target="_blank" href="http://www.naturalearthdata.com/">Natural Earth</a> shapefile data to GeoJSON</div>
+    <div><strong>example:</strong><br/> converting <a target="_blank" href="http://www.naturalearthdata.com/">Natural Earth</a> simplified country shapefile data to GeoJSON format</div>
     <div>1. download <a target="_blank" href="http://www.naturalearthdata.com/downloads/110m-cultural-vectors/">some data</a><br/>2. <img src="img/fionacode1.png"><br/>you can also <a target="_blank" href="http://toblerity.org/fiona/manual.html#filtering">filter by bounding box</a></div>
     <div><img src="img/fiona1.png">3. enjoy!<br/><br/><br/></div>
     <div>combine Fiona with <a target="_blank" href="https://pypi.python.org/pypi/pyproj">PyProj</a> to change the projection</div>
@@ -132,7 +136,7 @@
     <div><img src="img/fiona2.png">3. enjoy!<br/><br/><br/><br/></div>
 
     <!-- GeoJSON diversion -->
-    <div>before we go any further, let's talk about <a target="_blank" href="http://geojson.org/">GeoJSON</a>:</br></br>* JSON for geodata</br>* easy to use for web mapping</br>* easy to parse with Python</div>
+    <div>before we go any further, let's talk about <a target="_blank" href="http://geojson.org/">GeoJSON</a>:</br></br>* <strong>JSON</strong> for geodata</br>* easy to use for <strong>web mapping</strong></br>* easy to <strong>parse with Python</strong></div>
     <div>all you need to do is <code>treat it like a dictionary</code></div>
     <div><strong>example:</strong><br/><a target="_blank" href="http://osm.org">OpenStreetMap</a> data to map-ready GeoJSON</div>
     <div>1. download some data</br><img src="img/osm_start.png"></div>

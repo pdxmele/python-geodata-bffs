@@ -12,15 +12,14 @@ feature_collection = {
     'features': []
     }
 
-for feature in data["features"]:
-    tags = feature["properties"]["tags"]
+for feature in data['features']:
+    tags = feature['properties']['tags']
 
-    if ("building" in tags and "name" in tags):
-        osm_id = str(feature["id"])
-        name = tags["name"]
-        tags.pop("name")
-        geom_type = feature["geometry"]["type"]
-        coordinates = feature["geometry"]["coordinates"]
+    if ('building' in tags and 'name' in tags):
+        osm_id = str(feature['id'])
+        name = tags.pop('name')
+        geom_type = feature['geometry']['type']
+        coordinates = feature['geometry']['coordinates']
 
         updated_feature = {
             'type': 'Feature',
@@ -36,8 +35,7 @@ for feature in data["features"]:
             }
 
         feature_collection['features'].append(updated_feature)
-        print updated_feature
 
-with open(OUTPUT_PATH, 'w') as output:
-    output.write(json.dumps(feature_collection))
+with open(OUTPUT_PATH, 'w') as out:
+    out.write(json.dumps(feature_collection))
 

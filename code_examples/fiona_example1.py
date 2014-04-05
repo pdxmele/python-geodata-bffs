@@ -1,13 +1,12 @@
 import fiona
 
 
-with fiona.open('ne_110m_admin_0_countries.shp') as src:
-    with fiona.open(
-            'output.geojson', 'w',
-            crs=src.crs,
-            driver='GeoJSON',
-            schema=src.schema
-            ) as dst:
-        for f in src:
+with fiona.open('ne_110m_admin_0_countries.shp') as inp:
+    with fiona.open('output.geojson', 'w',
+                    crs=inp.crs,
+                    driver='GeoJSON',
+                    schema=inp.schema
+                    ) as out:
+        for f in inp:
             if f['properties']['sovereignt'] != 'Antarctica':
-                dst.write(f)
+                out.write(f)

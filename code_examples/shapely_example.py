@@ -4,7 +4,7 @@ from shapely.geometry import shape
 
 
 PORTLAND_PATH = 'portland.geojson'
-TRACKS_PATH = 'tracks_output.geojson'
+TRACKS_PATH = 'tracks.geojson'
 OUTPUT_PATH = 'tracks_portland.geojson'
 
 feature_collection = {
@@ -13,14 +13,14 @@ feature_collection = {
     }
 
 portland_json = open(PORTLAND_PATH).read()
-portland_geom = shape(json.loads(portland_json)["features"][0]["geometry"])
+portland_geom = shape(json.loads(portland_json)['features'][0]['geometry'])
 
 tracks_json = open(TRACKS_PATH).read()
-for feature in json.loads(tracks_json)["features"]:
-    feature_geom = shape(feature["geometry"])
+for feature in json.loads(tracks_json)['features']:
+    feature_geom = shape(feature['geometry'])
     if feature_geom.within(portland_geom.convex_hull):
         feature_collection['features'].append(feature)
 
-with open(OUTPUT_PATH, 'w') as output:
-    output.write(json.dumps(feature_collection))
+with open(OUTPUT_PATH, 'w') as out:
+    out.write(json.dumps(feature_collection))
 

@@ -33,16 +33,15 @@ Example: Converting [Natural Earth](http://www.naturalearthdata.com/) shapefile 
 		import fiona
 		
 		
-		with fiona.open('ne_110m_admin_0_countries.shp') as src:
-		    with fiona.open(
-		            'output.geojson', 'w',
-		            crs=src.crs,
-		            driver='GeoJSON',
-		            schema=src.schema
-		            ) as dst:
-		        for f in src:
+		with fiona.open('ne_110m_admin_0_countries.shp') as inp:
+		    with fiona.open('output.geojson', 'w',
+		                    crs=inp.crs,
+		                    driver='GeoJSON',
+		                    schema=inp.schema
+		                    ) as out:
+		        for f in inp:
 		            if f['properties']['sovereignt'] != 'Antarctica':
-		                dst.write(f)
+		                out.write(f)
                 
 	This script takes a Natural Earth countries shapefile, copies the schema and coordinate system, and then moves all the data over to a new GeoJSON file--unless the name of the country is Antarctica. In this way, you can filter by any property at the same time as you do your data conversion.
 	
@@ -64,41 +63,38 @@ It can be a good idea to change the projection/coordinate system to one that sui
 		
 		
 		with fiona.open('ne_110m_admin_0_countries.shp') as inp:
-		    
-            output_schema = inp.schema.copy()
-            output_schema['geometry'] = 'MultiPolygon'
+		    output_schema = inp.schema.copy()
+		    output_schema['geometry'] = 'MultiPolygon'
 		    p_in = Proj(inp.crs)
 		
-		    with fiona.open(
-		            'output_project/output_project.shp', 'w',
-		            crs=from_epsg(2163), 
-		            driver='ESRI Shapefile', 
-		            schema=output_schema
-		            ) as out:
-		
+		    with fiona.open('../project_output/project_output.shp', 'w',
+		                    crs=from_epsg(2163), 
+		                    driver='ESRI Shapefile', 
+		                    schema=output_schema
+		                    ) as out:
 		        p_out = Proj(out.crs)
 		        
-        for f in inp:
-            if f['properties']['sovereignt'] != 'Antarctica':
-                try:
-                    g = f['geometry']
-                    if g['type'] == 'Polygon':
-                        parts = [g['coordinates']]
-                    elif g['type'] == 'MultiPolygon':
-                        parts = g['coordinates']
-                    new_coords = []
-                    for part in parts:
-                        inner_coords = []
-                        for ring in part:
-                            x2, y2 = transform(p_in, p_out, *zip(*ring))
-                            inner_coords.append(zip(x2, y2))
-                        new_coords.append(inner_coords)
-                    f['geometry']['type'] = 'MultiPolygon'
-                    f['geometry']['coordinates'] = new_coords
-                    out.write(f)
-                
-                except Exception, e:
-                    print "Error transforming feature " + f['id']
+		        for f in inp:
+		            if f['properties']['sovereignt'] != 'Antarctica':
+		                try:
+		                    g = f['geometry']
+		                    if g['type'] == 'Polygon':
+		                        parts = [g['coordinates']]
+		                    elif g['type'] == 'MultiPolygon':
+		                        parts = g['coordinates']
+		                    new_coords = []
+		                    for part in parts:
+		                        inner_coords = []
+		                        for ring in part:
+		                            x2, y2 = transform(p_in, p_out, *zip(*ring))
+		                            inner_coords.append(zip(x2, y2))
+		                        new_coords.append(inner_coords)
+		                    f['geometry']['type'] = 'MultiPolygon'
+		                    f['geometry']['coordinates'] = new_coords
+		                    out.write(f)
+		                
+		                except Exception, e:
+		                    print 'Error transforming feature ' + f['id']
 
 	This script uses PyProj to transform each of the coordinates to the new coordinate system that is given with from_epsg via its [EPSG](http://epsg.io/) [SRID code](http://en.wikipedia.org/wiki/SRID). This dataset includes both Polygons and MultiPolygons, and I had to handle them differently because of their data structure differences (MultiPolygon coordinates live one level deeper so they can hold a number of Polygons). [Learn more about geometry types in Fiona here](http://toblerity.org/fiona/manual.html#record-geometry).
 
@@ -116,29 +112,26 @@ It can be a good idea to change the projection/coordinate system to one that sui
 		import os
 		
 		
-		ROOT_DIR = 'moves_export'
-		EXAMPLE_FILE = 'moves_export/storylines_20131201_to_20131207.gpx'
+		ROOT_DIR = '../moves_export'
+		EXAMPLE_FILE = '../moves_export/storylines_20131201_to_20131207.gpx'
 		
 		with fiona.open(EXAMPLE_FILE, layer='tracks') as example:
 		    in_schema = example.schema
 		    in_crs = example.crs
 		
-		with fiona.collection(
-		        "tracks_output.geojson", "w",
-		        crs=in_crs,
-		        driver="GeoJSON",
-		        schema=in_schema
-		        ) as out:
+		with fiona.open('tracks.geojson', 'w',
+		                crs=in_crs,
+		                driver='GeoJSON',
+		                schema=in_schema
+		                ) as out:
 		    for root, dirs, files in os.walk(ROOT_DIR):
 		        for file in files:
-		            file_str = ROOT_DIR + "/" + file
-		            if file_str[-4:len(file_str)] == ".gpx":
-		                with fiona.open(
-		                        file_str, 
-		                        layer='tracks'
-		                        ) as inp:
+		            file_str = ROOT_DIR + '/' + file
+		            if file_str[-4:len(file_str)] == '.gpx':
+		                with fiona.open(file_str,
+		                                layer='tracks'
+		                                ) as inp:
 		                    for feature in inp:
-		                        print(feature)
 		                        out.write(feature)
 	
 	In this case, I used one of the files I wanted to include as an example so I could set up the schema and coordinate system (this will only work if they all have the exact same structure). Next, it walks a directory looking for .gpx files to assemble. Since [GPX files](http://en.wikipedia.org/wiki/GPS_eXchange_Format) have several layers, I had to tell Fiona that I wanted the "tracks" layer.
@@ -183,15 +176,14 @@ All you need to do is treat it like a dictionary.
 		    'features': []
 		    }
 		
-		for feature in data["features"]:
-		    tags = feature["properties"]["tags"]
+		for feature in data['features']:
+		    tags = feature['properties']['tags']
 		
-		    if ("building" in tags and "name" in tags):
-		        osm_id = str(feature["id"])
-		        name = tags["name"]
-		        tags.pop("name")
-		        geom_type = feature["geometry"]["type"]
-		        coordinates = feature["geometry"]["coordinates"]
+		    if ('building' in tags and 'name' in tags):
+		        osm_id = str(feature['id'])
+		        name = tags.pop('name')
+		        geom_type = feature['geometry']['type']
+		        coordinates = feature['geometry']['coordinates']
 		
 		        updated_feature = {
 		            'type': 'Feature',
@@ -207,10 +199,9 @@ All you need to do is treat it like a dictionary.
 		            }
 		
 		        feature_collection['features'].append(updated_feature)
-		        print updated_feature
 		
-		with open(OUTPUT_PATH, 'w') as output:
-		    output.write(json.dumps(feature_collection))
+		with open(OUTPUT_PATH, 'w') as out:
+		    out.write(json.dumps(feature_collection))
 
 	It starts by loading all the input file data into a dictionary and setting up the feature_collection output dictionary. Then, I grab only the features that have the OpenStreetMap "building" and "name" tags (only named buildings, nothing else). After putting all of the attributes I want to keep into variables and pulling the name out of the tags dictionary, it puts together the new feature structure. Finally, the feature_collection dictionary (valid GeoJSON) gets written out into a new file.
     
@@ -278,10 +269,10 @@ You can find [tons of examples in the manual](http://toblerity.org/shapely/manua
 		import json
 		import shapely
 		from shapely.geometry import shape
-
-
+		
+		
 		PORTLAND_PATH = 'portland.geojson'
-		TRACKS_PATH = 'tracks_output.geojson'
+		TRACKS_PATH = 'tracks.geojson'
 		OUTPUT_PATH = 'tracks_portland.geojson'
 		
 		feature_collection = {
@@ -290,16 +281,16 @@ You can find [tons of examples in the manual](http://toblerity.org/shapely/manua
 		    }
 		
 		portland_json = open(PORTLAND_PATH).read()
-		portland_geom = shape(json.loads(portland_json)["features"][0]["geometry"])
+		portland_geom = shape(json.loads(portland_json)['features'][0]['geometry'])
 		
 		tracks_json = open(TRACKS_PATH).read()
-		for feature in json.loads(tracks_json)["features"]:
-		    feature_geom = shape(feature["geometry"])
+		for feature in json.loads(tracks_json)['features']:
+		    feature_geom = shape(feature['geometry'])
 		    if feature_geom.within(portland_geom.convex_hull):
 		        feature_collection['features'].append(feature)
 		
-		with open(OUTPUT_PATH, 'w') as output:
-		    output.write(json.dumps(feature_collection))
+		with open(OUTPUT_PATH, 'w') as out:
+		    out.write(json.dumps(feature_collection))
     
 	After some setup, we create a Shapely shape out of each feature's geometry. In this case, I did a convex hull around Portland before using [within](http://toblerity.org/shapely/manual.html#object.within) so that the tracks that intersected Maywood Park (the hole in the middle of Portland) would also be included. The [convex_hull](http://toblerity.org/shapely/manual.html#object.convex_hull) created the smallest polygon that contains all of the points within Portland.
 
@@ -323,9 +314,9 @@ Another option for geoprocessing without GIS software is [PostGIS](http://postgi
 
 <img src="img/qgis.png" height=300px>
 
-* PyQGIS and Python console 
-* Module "qgis" for using QGIS functionality and UI in your app
-* Development: QGIS is an open source project written in Python and C++
+* PyQGIS console 
+* Module "qgis" for using QGIS functionality and UI in your external app
+* Development: QGIS is an open source project written in Python and C++, you can contribute to it
 * [Plugins](https://plugins.qgis.org/): more than 250 useful plugins have already been written and it's easy to add your own
 
 <img src="img/qgisplugins2.png" height=300px>

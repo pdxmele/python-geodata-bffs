@@ -4,18 +4,15 @@ from pyproj import Proj, transform
 
 
 with fiona.open('ne_110m_admin_0_countries.shp') as inp:
-    
     output_schema = inp.schema.copy()
     output_schema['geometry'] = 'MultiPolygon'
     p_in = Proj(inp.crs)
 
-    with fiona.open(
-            'output_project/output_project.shp', 'w',
-            crs=from_epsg(2163), 
-            driver='ESRI Shapefile', 
-            schema=output_schema
-            ) as out:
-
+    with fiona.open('../project_output/project_output.shp', 'w',
+                    crs=from_epsg(2163), 
+                    driver='ESRI Shapefile', 
+                    schema=output_schema
+                    ) as out:
         p_out = Proj(out.crs)
         
         for f in inp:
@@ -38,5 +35,4 @@ with fiona.open('ne_110m_admin_0_countries.shp') as inp:
                     out.write(f)
                 
                 except Exception, e:
-                    print "Error transforming feature " + f['id']
-
+                    print 'Error transforming feature ' + f['id']
