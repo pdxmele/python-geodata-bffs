@@ -33,17 +33,16 @@ Example: Converting [Natural Earth](http://www.naturalearthdata.com/) shapefile 
 		import fiona
 		
 		
-		with fiona.open('ne_110m_admin_0_countries.shp', 'r') as inp:
-		    output_schema = inp.schema.copy()
-		    with fiona.collection(
-		            "output.geojson", "w",
-		            crs=inp.crs, 
-		            driver="GeoJSON", 
-		            schema=output_schema
-		            ) as out:
-		        for f in inp:
-		            if f["properties"]["sovereignt"] != "Antarctica":
-		                out.write(f)
+		with fiona.open('ne_110m_admin_0_countries.shp') as src:
+		    with fiona.open(
+		            'output.geojson', 'w',
+		            crs=src.crs,
+		            driver='GeoJSON',
+		            schema=src.schema
+		            ) as dst:
+		        for f in src:
+		            if f['properties']['sovereignt'] != 'Antarctica':
+		                dst.write(f)
                 
 	This script takes a Natural Earth countries shapefile, copies the schema and coordinate system, and then moves all the data over to a new GeoJSON file--unless the name of the country is Antarctica. In this way, you can filter by any property at the same time as you do your data conversion.
 	
@@ -64,42 +63,42 @@ It can be a good idea to change the projection/coordinate system to one that sui
 		from pyproj import Proj, transform
 		
 		
-		with fiona.open('ne_110m_admin_0_countries.shp', 'r') as inp:
+		with fiona.open('ne_110m_admin_0_countries.shp') as inp:
 		    
-		    output_schema = inp.schema.copy()
+            output_schema = inp.schema.copy()
+            output_schema['geometry'] = 'MultiPolygon'
 		    p_in = Proj(inp.crs)
 		
-		    with fiona.collection(
-		            "output_project/output_project.shp", "w",
+		    with fiona.open(
+		            'output_project/output_project.shp', 'w',
 		            crs=from_epsg(2163), 
-		            driver="ESRI Shapefile", 
+		            driver='ESRI Shapefile', 
 		            schema=output_schema
 		            ) as out:
 		
 		        p_out = Proj(out.crs)
 		        
-		        for f in inp:
-		            if f["properties"]["sovereignt"] != "Antarctica":
-		                try:
-		                    if f['geometry']['type'] == "Polygon":
-		                        new_coords = []
-		                        for ring in f['geometry']['coordinates']:
-		                            x2, y2 = transform(p_in, p_out, *zip(*ring))
-		                            new_coords.append(zip(x2, y2))
-		                        f['geometry']['coordinates'] = new_coords
-		                    elif f['geometry']['type'] == "MultiPolygon":
-		                        new_coords = []
-		                        inner_coords = []
-		                        for polygon in f['geometry']['coordinates']:
-		                            for ring in polygon:
-		                                x2, y2 = transform(p_in, p_out, *zip(*ring))
-		                                inner_coords.append(zip(x2, y2))
-		                        new_coords.append(inner_coords)
-		                        f['geometry']['coordinates'] = new_coords
-		                    out.write(f)
-		                
-		                except Exception, e:
-		                    print "Error transforming feature " + f['id']
+        for f in inp:
+            if f['properties']['sovereignt'] != 'Antarctica':
+                try:
+                    g = f['geometry']
+                    if g['type'] == 'Polygon':
+                        parts = [g['coordinates']]
+                    elif g['type'] == 'MultiPolygon':
+                        parts = g['coordinates']
+                    new_coords = []
+                    for part in parts:
+                        inner_coords = []
+                        for ring in part:
+                            x2, y2 = transform(p_in, p_out, *zip(*ring))
+                            inner_coords.append(zip(x2, y2))
+                        new_coords.append(inner_coords)
+                    f['geometry']['type'] = 'MultiPolygon'
+                    f['geometry']['coordinates'] = new_coords
+                    out.write(f)
+                
+                except Exception, e:
+                    print "Error transforming feature " + f['id']
 
 	This script uses PyProj to transform each of the coordinates to the new coordinate system that is given with from_epsg via its [EPSG](http://epsg.io/) [SRID code](http://en.wikipedia.org/wiki/SRID). This dataset includes both Polygons and MultiPolygons, and I had to handle them differently because of their data structure differences (MultiPolygon coordinates live one level deeper so they can hold a number of Polygons). [Learn more about geometry types in Fiona here](http://toblerity.org/fiona/manual.html#record-geometry).
 
@@ -120,7 +119,7 @@ It can be a good idea to change the projection/coordinate system to one that sui
 		ROOT_DIR = 'moves_export'
 		EXAMPLE_FILE = 'moves_export/storylines_20131201_to_20131207.gpx'
 		
-		with fiona.open(EXAMPLE_FILE, 'r', layer='tracks') as example:
+		with fiona.open(EXAMPLE_FILE, layer='tracks') as example:
 		    in_schema = example.schema
 		    in_crs = example.crs
 		
@@ -128,7 +127,7 @@ It can be a good idea to change the projection/coordinate system to one that sui
 		        "tracks_output.geojson", "w",
 		        crs=in_crs,
 		        driver="GeoJSON",
-		        schema=in_schema.copy()
+		        schema=in_schema
 		        ) as out:
 		    for root, dirs, files in os.walk(ROOT_DIR):
 		        for file in files:
@@ -136,7 +135,6 @@ It can be a good idea to change the projection/coordinate system to one that sui
 		            if file_str[-4:len(file_str)] == ".gpx":
 		                with fiona.open(
 		                        file_str, 
-		                        'r', 
 		                        layer='tracks'
 		                        ) as inp:
 		                    for feature in inp:
