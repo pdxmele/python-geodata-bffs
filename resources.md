@@ -12,9 +12,9 @@ Python + Geo things I didn't have time to talk about:
 * [mapnik](https://github.com/mapnik/mapnik): "an open source toolkit for developing mapping applications"
 * Rtree and zope.index.rtree in the [Toblerity project](http://toblerity.org/), where Fiona and Shapely also live
 * [GRASS and Python](http://grasswiki.osgeo.org/wiki/GRASS_and_Python)
-* A ton of other things I forgot or haven't heard about yet
+* A ton of other things I'm sure I forgot or haven't heard about yet
 
-Online:
+Online resources:
 
 * [Fiona docs](http://toblerity.org/fiona/fiona.html) and [examples from the Fiona repository](https://github.com/Toblerity/Fiona/tree/master/examples)
 * [PyProj docs](http://pyproj.googlecode.com/svn/trunk/docs/index.html)
@@ -45,13 +45,17 @@ QGIS Python resources:
 	* [Exploring the QGIS Python Console](http://www.qgisworkshop.org/html/workshop/python_in_qgis_tutorial2.html)
 	* [Building A Simple Plugin](http://www.qgisworkshop.org/html/workshop/plugins_tutorial.html)
 
+Getting started with web mapping (generally == JavaScript):
+
+* [Leaflet](http://leafletjs.com/)
+* [OpenLayers](http://openlayers.org/)
+* [D3](http://d3js.org/)
 
 Other useful stuff:
 
-* Create and convert GeoJSON at [geojson.io](http://geojson.io)
-* [Leaflet](http://leafletjs.com/), an easy way to get started with web mapping
+* Create and convert to GeoJSON at [geojson.io](http://geojson.io)
 * Find coordinate systems/projections at [epsg.io](http://epsg.io/)
 * A [list of OpenStreetMap conversion tools](https://github.com/pdxmele/gwyw-osm/blob/master/converters.md) from my ["Getting what you want out of OpenStreetMap"](https://github.com/pdxmele/gwyw-osm/) presentation
 * [PPyGIS](https://pypi.python.org/pypi/PPyGIS), a [PostGIS](http://postgis.refractions.net/) adapter for [Psycopg](https://pypi.python.org/pypi/psycopg2)
 
-Suggestions welcome!
+Other suggestions welcome!
