@@ -168,15 +168,15 @@ All you need to do is use standard Python JSON parsing to read it into (and trea
 
 ###Example: Turning OpenStreetMap data into map-ready GeoJSON
 
-[OpenStreetMap](http://osm.org) is a free, seamless map of the world that includes all kinds of interesting data. Let's make a map for a trip to Japan.
+[OpenStreetMap](http://osm.org) is a free, seamless map of the world that includes all kinds of interesting data. Let's get some stuff to make a map for a trip to Japan.
 
-1. Download a small section of data from OSM by selecting an area of interest. If you need a large area, follow the links on the site for other APIs you can use instead. Your download will include *everything* that you see there. OSM data combines points (nodes), lines (ways), polygons, and other data structures (relations) into a single layer of XML data.
+1. Export a small section of data from OSM by selecting an area of interest. If you need a large area, follow the links on the site for other APIs you can use instead. Your download will include *everything* that you see there. OSM data combines points (nodes), lines (ways), polygons, and other data structures (relations) into a single layer of XML data.
 
 	<img src="img/osm_start.png" height=300px>
 
 2. Next, convert it to GeoJSON with [your tool of choice](https://github.com/pdxmele/gwyw-osm/blob/master/converters.md), or you can [parse the OSM XML directly](http://wiki.openstreetmap.org/wiki/OSM_XML). For this example, I used [osmtogeojson](http://tyrasd.github.io/osmtogeojson/).
 
-3. Now, let's say we only want buildings with names, not the roads and everything else. You can clean it up with a [script like this](https://github.com/pdxmele/python-geodata-bffs/blob/master/code_examples/geojson_example.py):
+3. Now, let's say we only want buildings with names for now, not the roads and everything else. We can clean it up with a [script like this](https://github.com/pdxmele/python-geodata-bffs/blob/master/code_examples/geojson_example.py):
 
 		import json
 		
