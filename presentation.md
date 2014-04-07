@@ -309,7 +309,7 @@ Let's say you have no idea what spatial analysis is. That's fine! Here's a reall
 		with open(OUTPUT_PATH, 'w') as out:
 		    out.write(json.dumps(feature_collection))
     
-	After some setup, it creates a Shapely shape out of each feature's geometry. Then, it created a [convex_hull](http://toblerity.org/shapely/manual.html#object.convex_hull) around Portland, which created the smallest geometry that would include all of Portland. Once that's set up, it compares each feature in the GPX data to that geometry by using [within](http://toblerity.org/shapely/manual.html#object.within). I did it this way to ensure that the tracks that intersected Maywood Park (the hole in the middle of Portland) would also be included. The  created the smallest polygon that contains all of the points within Portland.
+	After some setup, it gets each feature's geometry into a Shapely "shape". Then, does a [convex_hull](http://toblerity.org/shapely/manual.html#object.convex_hull) of Portland, which gets the smallest geometry that would include all of Portland. Once that's set up, it compares each feature in the GPX data to that geometry by using [within](http://toblerity.org/shapely/manual.html#object.within). I did it this way to ensure that the tracks that intersected Maywood Park (the hole in the middle of Portland) would also be included.
 
 3. Here's the result. The pink tracks are those that remained after the code was run. It removed my flight to Disneyland and various unseen rovings around southern California on a winter vacation.
 
