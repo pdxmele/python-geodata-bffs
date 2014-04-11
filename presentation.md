@@ -244,9 +244,9 @@ Finally, because it's just a dictionary, it's easy to create tests for the data.
 * Check against known values
 
         boundary_check_list = [data["properties"]["boundary_type"], data["properties"]["boundary_type_string"]]
-            if not boundary_check_list in typelist:
-                print (feature_id + " in file " + filename + " has a boundary_type and boundary_type_string,
-                    but they don't match any pairs in the type names file")
+        if not boundary_check_list in typelist:
+            print (feature_id + " in file " + filename + " has a boundary_type and boundary_type_string,
+                but they don't match any pairs in the type names file")
 
 * Check the structure
 
@@ -257,7 +257,7 @@ Finally, because it's just a dictionary, it's easy to create tests for the data.
         if ("type" not in data["geometry"] or not (data["geometry"]["type"] == "Polygon" or
                                                    data["geometry"]["type"] == "MultiPolygon")):
 
-It can be a good idea to run tests like this if your system expects a very particular format while your data comes from a variety of sources. At Urban Airship, we use data from OpenStreetMap, Natural Earth, TIGER, proprietary datasets like Nielsen and Maponics, as well as custom latitude/longitude point data from our customers. All of the final data needs to be in just the right format to work with our user interface and backend systems.
+It can be a good idea to run tests like this if your system expects a very particular format while your data comes from a variety of sources. At [Urban Airship](http://www.urbanairship.com), we use data from OpenStreetMap, Natural Earth, TIGER, proprietary datasets like Nielsen and Maponics, as well as custom latitude/longitude point data from our customers. All of the final data needs to be in just the right format to work with our user interface and backend systems.
 
 <img src="img/ua_ss.png" height=300px>
 
