@@ -103,11 +103,11 @@
   </head>
   <body>
 
-    <div>after this finishes loading, use the arrow keys to change slides or <br/><strong>view this presentation in markdown with notes</strong> <a target="_blank" href="https://github.com/pdxmele/python-geodata-bffs/blob/master/presentation.md">here</a></div>
+    <div>after this finishes loading, use the arrow keys to change slides or <br/><em>view this presentation in markdown with notes</em> <a target="_blank" href="https://github.com/pdxmele/python-geodata-bffs/blob/master/presentation.md">here</a></div>
     <div><br/><br/>http://bit.ly/python-geo-bffs<br/><br/></div>
 
     <!-- Introduction -->
-    <div><a target="_blank" href="http://github.com/pdxmele/python-geodata-bffs/">Python + geographic data = BFFs</a><br/>Mele Sax-Barnett</div>
+    <div><a target="_blank" href="http://github.com/pdxmele/python-geodata-bffs/">Python + geographic data = BFFs</a><br/>Mele Sax-Barnett<br/><strong>Urban Airship</strong></div>
     <div><img src="img/Cat_and_dog_friends.jpg"><em>why?</em><br/><br/></div>
     <div><img src="img/map1.png">I <code>&lt;3</code> maps, but making them can be <br/>a pain</div>
     <div>the <code>worst</code> part is</div>
@@ -120,7 +120,7 @@
     <div>you could point and click all day in <br/>out-of-the-box <br/><a target="_blank" href="http://en.wikipedia.org/wiki/Geographic_information_system">GIS</a> software,<br/><em>or you could use Python</em></div>
 
     <!-- About Geographic Data-->
-    <div><em>about (vector) </em><a target="_blank" href="http://en.wikipedia.org/wiki/GIS_file_formats">geographic data</a>:<br/><ul><li>made up of one or several files</li><li>with a coordinate system/<a target="_blank" href="http://en.wikipedia.org/wiki/Map_projection">projection</a></li><li>made up of one or several "<strong>layers</strong>" of data</li><li>each of which includes a number of <strong>features</strong></li><li>each feature has <strong>geometry</strong>:</li><ul><li><strong>type</strong>: point/line/polygon/etc.</li><li><strong>coordinates</strong></li></ul><li>each feature also has various other attributes/<strong>properties</strong></li></ul></div>
+    <div><em>about (vector) </em><a target="_blank" href="http://en.wikipedia.org/wiki/GIS_file_formats">geodata</a>:<br/><ul><li>made up of one or several files</li><li>with a coordinate system/<a target="_blank" href="http://en.wikipedia.org/wiki/Map_projection">projection</a></li><li>made up of one or several "<strong>layers</strong>" of data</li><li>each of which includes 1+ <strong>features</strong></li><li>each feature has <strong>geometry</strong>:</li><ul><li><strong>type</strong>: point/line/polygon/etc.</li><li><strong>coordinates</strong></li></ul><li>each feature also has various other attributes/<strong>properties</strong></li></ul></div>
 
     <!-- Conversion / Fiona -->
     <div><strong>Python packages:</strong><br/>convert and filter your data with <a target="_blank" href="https://pypi.python.org/pypi/fiona">Fiona</a></div>
@@ -129,10 +129,10 @@
     <div><img src="img/fiona1.png">3. enjoy!</div>
     <div><strong>another Python package:</strong><br/>combine Fiona with <a target="_blank" href="https://pypi.python.org/pypi/pyproj">PyProj</a> to change the projection</div>
     <div>1. <img src="img/proj1code.png"></div>
-    <div>2. <img src="img/proj2code.png"></div>
-    <div><img src="img/proj.png">3. enjoy!<br/><br/></div>
+    <div>... <img src="img/proj2code.png"></div>
+    <div><img src="img/proj.png">2. enjoy!<br/><br/></div>
     <div><strong>one more <br/>Fiona example:</strong><br/> assemble a folder of <br/>GPX tracks into <br/>a single GeoJSON file</div>
-    <div>1. export some data in GPX format <br/>from your favorite tracker<br/>2. <img src="img/fionacode2.png"></div>
+    <div>1. export some data in GPX format<br/>2. <img src="img/fionacode2.png"></div>
     <div><img src="img/fiona2.png">3. enjoy!<br/><br/><br/><br/></div>
 
     <!-- GeoJSON diversion -->
@@ -144,22 +144,22 @@
     <div>3. process</br><img src="img/geojsoncode1.png"><br/></div>
     <div>...<img src="img/geojsoncode2.png"></div>
     <div><img src="img/osm_done.png">4. <code>enjoy!</code></div>
-    <div><strong>repeat with CSV/XML data too:</strong><br/>just put it in a dictionary and  assemble valid GeoJSON with <em>only the features and attributes that you want</em>.<br/>if you have a lot of data, switch to reading and writing line-by-line.</div>
-    <div>because it's just a dictionary, you can also <code>create tests</code> for the data:<br/>* check for <strong>required keys</strong><br/>* check <em>the type</em> of each key's value<br/>* check against <strong>known values</strong><br/>* check <em>the structure</em><br/>* check for <strong>valid geometry</strong></div>
+    <div><strong>or do this with CSV/XML data:</strong><br/>just put it in a dictionary and assemble valid GeoJSON with <em>only the features and attributes that you want</em>.<br/>if you have a lot of data, switch to reading and writing line-by-line.</div>
+    <div>because it's just a dictionary, it's easy to <code>create tests</code> for the data:<br/><ul><li>check for <strong>required keys</strong></li><li>check <em>the type</em> of each key's value</li><li>check against <strong>known values</strong></li><li>check <em>the structure</em></li><li>check for <strong>valid geometry</strong></li></ul></div>
     <div>this is important if your system expects <br/>a very particular format, <br/>while your data comes from <code>a variety of sources</code><br/><img src="img/ua_ss.png"></div>
 
     <!-- Shapely -->
-    <div>spatial analysis and <br/>data manipulation <br/>with <a target="_blank" href="https://pypi.python.org/pypi/shapely">Shapely</a><br/><br/></div>
-    <div><a target="_blank" href="http://toblerity.org/shapely/manual.html">tons of examples in the manual</a>:<br/> validate, simplify, buffer, convex hull, merge, union, interpolate, create polygons from lines, get centroid, bounding box, area, or length, distance between two objects, check if they are equal or almost equal, get the difference or symmetrical difference, see if one contains the other, if they intersect or touch, etc.</div>
+    <div><em>spatial analysis</em> and <br/>data manipulation <br/>with <a target="_blank" href="https://pypi.python.org/pypi/shapely">Shapely</a><br/><br/></div>
+    <div><a target="_blank" href="http://toblerity.org/shapely/manual.html">tons of examples in the manual</a>: <br/>validate and construct geometry, simplify, buffer, convex hull, envelope, offset, merge, union, interpolate, create polygons from lines, get centroid or representative point, bounds, area, or length, the distance between two objects, check if they are equal or almost equal, get the difference or symmetrical difference, see if one contains the other, if they intersect or touch, work with 3D data and Numpy, etc.</div>
     <div><strong>example:</strong><br/> keep only <br/>the GPX tracks <br/>in Portland</div>
-    <div>1. get Portland as GeoJSON<br/>2. <img src="img/shapelycode.png"></div>
+    <div>1. get Portland or your city as GeoJSON<br/>2. <img src="img/shapelycode.png"></div>
     <div><img src="img/shapelyresult.png"><br/><br/>3. enjoy!</div>
-    <div>another option for geoprocessing without <br/>GIS software: <a target="_blank" href="http://postgis.net/">PostGIS</a><br/><br/>talk to it with <a target="_blank" href="https://pypi.python.org/pypi/psycopg2/">Psycopg</a> or your Python PostgreSQL tool of choice</div>
+    <div>another option for geoprocessing without <br/>GIS software: <a target="_blank" href="http://postgis.net/">PostGIS</a><br/><br/>talk to it with <a target="_blank" href="https://pypi.python.org/pypi/psycopg2/">Psycopg2</a> or your Python PostgreSQL tool of choice</div>
 
     <!-- Wrap it up -->
     <div>finally, GIS software <code>&lt;3</code>s Python</div>
-    <div><a target="_blank" href="http://resources.arcgis.com/en/communities/python/">ArcGIS</a>: http://resources.arcgis.com/en/communities/python/<br/><img src="img/arcgis.png"><br/><a target="_blank" href="http://resources.arcgis.com/en/help/main/10.1/index.html#//000v00000001000000#GUID-4EC90E5F-F497-4FC0-99FB-7703ED4C8F77">arcpy</a> scripting and <a target="_blank" href="http://resources.arcgis.com/en/help/main/10.1/index.html#//014p00000025000000">add-ins</a></div>
-    <div><a target="_blank" href="http://www.qgis.org/en/docs/pyqgis_developer_cookbook/intro.html">QGIS</a>: http://www.qgis.org/en/docs/pyqgis_developer_cookbook/intro.html<br/><img src="img/qgis.png"><br/>console, module, plugins, and development</div>
+    <div><a target="_blank" href="http://resources.arcgis.com/en/communities/python/">ArcGIS</a>:<br/>http://resources.arcgis.com/en/communities/python/<br/><img src="img/arcgis.png"><br/><a target="_blank" href="http://resources.arcgis.com/en/help/main/10.1/index.html#//000v00000001000000#GUID-4EC90E5F-F497-4FC0-99FB-7703ED4C8F77">arcpy</a> scripting and <a target="_blank" href="http://resources.arcgis.com/en/help/main/10.1/index.html#//014p00000025000000">add-ins</a></div>
+    <div><a target="_blank" href="http://www.qgis.org/en/docs/pyqgis_developer_cookbook/intro.html">QGIS</a>:<br/>http://www.qgis.org/en/docs/pyqgis_developer_cookbook/intro.html<br/><br/><img src="img/qgis.png"><br/><br/>console, module, plugins, and development</div>
     <div><img src="img/qgisplugins2.png"><br/><br/><br/><a target="_blank" href="https://plugins.qgis.org/">> 250 plugins</a></div>
     <div><em>thank you!</em><br/><br/>questions? <a target="_blank" href="https://twitter.com/pdxmele">@pdxmele</a> or file an issue <a target="_blank" href="https://github.com/pdxmele/python-geodata-bffs">here</a></br>more resources <a target="_blank" href="https://github.com/pdxmele/python-geodata-bffs/blob/master/resources.md">here</a><br/></div>
   </body>
