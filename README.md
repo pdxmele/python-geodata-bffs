@@ -1,6 +1,6 @@
 ##Python + Geographic Data = BFFs (best friends forever)
 ###A talk for PyCon 2014 and the Portland Python User Group
-by Mele Sax-Barnett, *(with code contributions from @sgillies and @keturn, and some images shamelessly borrowed from around the internet)*
+by Mele Sax-Barnett, *with code contributions from [@sgillies](https://github.com/sgillies) and [@keturn](https://github.com/keturn), and some images shamelessly borrowed from around the internet*
 
 [The presentation is live here](http://pdxmele.com/python-geodata-bffs/index.html) (you'll need to give it a minute to load), and was created with [big](https://github.com/tmcw/big).
 
