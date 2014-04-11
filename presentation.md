@@ -35,10 +35,10 @@ Some, but not all of these, are also true for raster data as well, which you can
 
 ###Convert and filter your data with [Fiona](https://pypi.python.org/pypi/Fiona).
 
-Example: Converting [Natural Earth](http://www.naturalearthdata.com/) shapefile data to GeoJSON
+Example: Converting [Natural Earth](http://www.naturalearthdata.com/) shapefile data to GeoJSON. Let's say we want to make a simple map of the world with all of the countries. Natural Earth is a great source for this, because it has cartographically simplified data with a lot of interesting attributes. However, it's in Shapefile format, and I want GeoJSON.
 
-1. Download some [free, awesome data](http://www.naturalearthdata.com/downloads/110m-cultural-vectors/), like a simplified version of all of the countries of the world. Let's say we need it in a different format, and we don't want Antarctica to be included.
-2. Next, put together [a script like this](https://github.com/pdxmele/python-geodata-bffs/blob/master/code_examples/fiona_example1.py):
+1. Download this [free, awesome data](http://www.naturalearthdata.com/downloads/110m-cultural-vectors/).
+2. Now, we need it in a different format, and we don't want Antarctica to be included. Use [a script like this](https://github.com/pdxmele/python-geodata-bffs/blob/master/code_examples/fiona_example1.py):
 
         import fiona
 
@@ -53,17 +53,17 @@ Example: Converting [Natural Earth](http://www.naturalearthdata.com/) shapefile 
                     if f['properties']['sovereignt'] != 'Antarctica':
                         out.write(f)
 
-  This script takes the Natural Earth countries shapefile, copies its coordinate system and schema (its geometry type and properties), and then moves all the data over to a new GeoJSON file. That is, unless the name of the country is Antarctica. In this way, you can filter by any property at the same time as you do your data conversion.
+  This script takes the Natural Earth countries shapefile, copies its coordinate system and schema (its geometry type and properties), and then moves all the data over to a new GeoJSON file. That is, unless the name of the country is Antarctica. In this way, you can use Fiona to filter by any property at the same time as you do your data conversion.
 
-  You can also [filter by bounding box](http://toblerity.org/fiona/manual.html#filtering).
+  It also lets you [filter by bounding box](http://toblerity.org/fiona/manual.html#filtering).
 
-3. Enjoy!
+3. Enjoy your data!
 
 <img src="img/fiona1.png" height=300px>
 
 ###Combine Fiona with [PyProj](https://pypi.python.org/pypi/pyproj) to change the projection
 
-It can be a good idea to change the projection to one that suits your needs better. For example, if you're mapping the poles, you certainly don't want to use WGS 84 (close to raw lat/longs), which is what you see in the image above. Similarly, if you're measuring large distances or plotting great circle routes, your accuracy depends on using the correct projection. Remember, the world is not the shape of your screen!
+It can be a good idea to change the projection to one that suits your needs better. For example, if you're mapping the poles, you certainly don't want to use WGS 84 (basically raw latitudes/longitudes), which is what you see in the image above. Similarly, if you're measuring large distances or plotting great circle routes, your accuracy depends on using the correct projection. Remember, the world is not the shape of your screen!
 
 Let's say we want a more globe-like view, centered on North America.
 
@@ -108,7 +108,7 @@ Let's say we want a more globe-like view, centered on North America.
                         except Exception, e:
                             print 'Error transforming feature ' + f['id']
 
-  This script uses PyProj's ```transform``` to convert every coordinate in the data to the new coordinate system, defined with ```from_epsg``` via its [EPSG](http://epsg.io/) [SRID code](http://en.wikipedia.org/wiki/SRID), 2613. Since the original dataset included both Polygons and MultiPolygons and these data structures differ (MultiPolygon coordinates live one level deeper so they can contain a number of Polygons), we handled each type differently. [Learn more about geometry types in Fiona here](http://toblerity.org/fiona/manual.html#record-geometry).
+  This script uses PyProj's ```transform``` to convert every coordinate in the data to the new coordinate system, defined with ```from_epsg``` via its [EPSG](http://epsg.io/) [SRID code](http://en.wikipedia.org/wiki/SRID), 2613. Since the original dataset included both Polygons and MultiPolygons and these data structures differ (MultiPolygon coordinates live one level deeper so they can contain a collection of Polygons), we handled each type differently. [Learn more about geometry types in Fiona here](http://toblerity.org/fiona/manual.html#record-geometry).
 
 2. Enjoy your new projection!
 
@@ -176,7 +176,7 @@ All you need to do is use standard Python JSON parsing to read it into (and trea
 
 2. Next, convert it to GeoJSON with [your tool of choice](https://github.com/pdxmele/gwyw-osm/blob/master/converters.md), or you can [parse the OSM XML directly](http://wiki.openstreetmap.org/wiki/OSM_XML). For this example, I used [osmtogeojson](http://tyrasd.github.io/osmtogeojson/).
 
-3. Now, let's say we only want buildings with names for now, not the roads and everything else. We can clean it up with a [script like this](https://github.com/pdxmele/python-geodata-bffs/blob/master/code_examples/geojson_example.py):
+3. Now, let's say we only want buildings with names, not the roads and everything else. We can clean it up with a [script like this](https://github.com/pdxmele/python-geodata-bffs/blob/master/code_examples/geojson_example.py):
 
         import json
 
@@ -229,7 +229,7 @@ All you need to do is use standard Python JSON parsing to read it into (and trea
 
 You can follow a similar approach when starting with XML or raw CSV data too--just parse it, put it in a dictionary, and assemble valid GeoJSON with only the features and attributes that you want to keep. You can also run mathematical or geographical operations on your features, creating circles around points or modifying them in other ways.
 
-If you have a lot of data (like the whole OpenStreetMap planet), just add some newlines around pseudo-dictionary objects and switch to reading and writing the data line-by-line.
+If you have a lot of data (like the whole OpenStreetMap planet), just add some newlines around dictionary-like objects and switch to reading and writing the data line-by-line.
 
 Finally, because it's just a dictionary, it's easy to create tests for the data. You can:
 
@@ -279,7 +279,7 @@ Let's say you need to do some [spatial analysis](http://en.wikipedia.org/wiki/Ge
 
 ###Example: Keep only the GPX tracks that are in Portland
 
-Let's say you have no idea what spatial analysis is. That's fine! Here's a really simple example of it:
+You say you have no idea what spatial analysis is? That's fine! Here's a really simple example of it:
 
 1. Get Portland/your city as GeoJSON from your source of choice. I used an [RLIS](http://rlisdiscovery.oregonmetro.gov/) polygon dataset of the cities in the metro region and pulled Portland out of it.
 2. Next, try [a script like this](https://github.com/pdxmele/python-geodata-bffs/blob/master/code_examples/shapely_example.py):
@@ -310,9 +310,9 @@ Let's say you have no idea what spatial analysis is. That's fine! Here's a reall
         with open(OUTPUT_PATH, 'w') as out:
             out.write(json.dumps(feature_collection))
 
-    After some setup, it gets each feature's geometry into a Shapely "shape". Then, does a [convex_hull](http://toblerity.org/shapely/manual.html#object.convex_hull) of Portland, which gets the smallest geometry that would include all of Portland. Once that's set up, it compares each feature in the GPX data to that geometry by using [within](http://toblerity.org/shapely/manual.html#object.within). I did it this way to ensure that the tracks that intersected Maywood Park (the hole in the middle of Portland) would also be included.
+    After some setup, it reads Portland's geometry into a Shapely "shape". Then, it does a [convex_hull](http://toblerity.org/shapely/manual.html#object.convex_hull), which gets the smallest geometry that would include all of Portland. Next, it compares each feature in the GPX data to that geometry by using [within](http://toblerity.org/shapely/manual.html#object.within). I did it this way to ensure that the tracks that intersected Maywood Park (the hole in the middle of Portland) would still be included, but nothing else that crossed or was outside of its boundaries.
 
-3. Here's the result. The pink tracks are those that remained after the code was run. It removed my flight to Disneyland and various unseen rovings around southern California on a winter vacation.
+3. Here's the result. The pink tracks are those that remained after the code was run. It removed my flight to Disneyland and various unseen rovings around California on vacation.
 
 <img src="img/shapelyresult.png" height=300px>
 
@@ -333,7 +333,7 @@ Another option for spatial analysis without GIS software is [PostGIS](http://pos
 <img src="img/qgis.png" height=300px>
 
 * Python/PyQGIS console
-* A "qgis" Python module you can use to include QGIS functionality and even its UI in your external app
+* A "qgis" Python module you can use to include QGIS functionality and even its UI in your external apps
 * Development: QGIS is an open source project written in Python and C++, so you can contribute to it
 * [Plugins](https://plugins.qgis.org/): more than 250 useful plugins have already been written in Python to meet all sorts of needs, and it's easy to add your own
 
