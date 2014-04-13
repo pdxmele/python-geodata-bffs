@@ -17,7 +17,7 @@ with fiona.open('tracks.geojson', 'w',
     for root, dirs, files in os.walk(ROOT_DIR):
         for file in files:
             file_str = ROOT_DIR + '/' + file
-            if file_str[-4:len(file_str)] == '.gpx':
+            if file_str[-4:] == '.gpx':
                 with fiona.open(file_str,
                                 layer='tracks'
                                 ) as inp:
